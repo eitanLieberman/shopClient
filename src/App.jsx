@@ -3,3 +3,5 @@ const App = () => {
 };
 
 export default App;
+
+log(11);
