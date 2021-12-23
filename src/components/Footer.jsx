@@ -1,10 +1,4 @@
-import {
-  ContactMailTwoTone,
-  Facebook,
-  Instagram,
-  Room,
-  Twitter,
-} from "@material-ui/icons";
+import { Facebook, Instagram, Room, Twitter } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 
@@ -46,7 +40,7 @@ const Center = styled.div`
 const Title = styled.h3`
   margin-bottom: 30px;
 `;
-Room;
+
 const List = styled.ul`
   margin: 0;
   padding: 0;
