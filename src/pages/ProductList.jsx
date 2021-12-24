@@ -18,6 +18,19 @@ const FilterContainer = styled.div`
 const Filter = styled.div`
   margin: 20px;
 `;
+
+const FilterText = styled.span`
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 20px;
+`;
+
+const Select = styled.select`
+  padding: 10px;
+  margin-right: 20px;
+`;
+const Option = styled.option``;
+
 const ProductList = () => {
   return (
     <Container>
@@ -26,8 +39,29 @@ const ProductList = () => {
       <Title>Shirts</Title>
 
       <FilterContainer>
-        <Filter>filter 1</Filter>
-        <Filter> filter 2</Filter>
+        <Filter>
+          <FilterText>Filter Products:</FilterText>
+          <Select>
+            <Option disabled selected>
+              colors
+            </Option>
+            <Option>white</Option>
+            <Option>black</Option>
+            <Option>red</Option>
+            <Option>pink</Option>
+          </Select>
+        </Filter>
+        <Filter>
+          <FilterText>Sort Products:</FilterText>
+          <Select>
+            <Option disabled selected>
+              Sort By
+            </Option>
+            <Option>Most Recent</Option>
+            <Option>Price(from lowest)</Option>
+            <Option>Price(from highest)</Option>
+          </Select>
+        </Filter>
       </FilterContainer>
       <Products />
       <Newsletter />
