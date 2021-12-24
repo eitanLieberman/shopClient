@@ -13,6 +13,7 @@ const Wrapper = styled.div`
 `;
 
 const ImgContainer = styled.div`
+  min-width: 40%;
   flex: 1;
 `;
 
