@@ -5,14 +5,14 @@ export const sliderItems = [
     id: 1,
     img: logo,
     title: "DYNAMIC",
-    desc: "DONE WITH STYLED COMPONENTS⏰ ",
+    desc: "UI DONE WITH REACT/REDUX+ STYLED COMPONENTS⏰ ",
     bg: "white",
   },
   {
     id: 2,
     img: logo,
-    title: "Sale 2",
-    desc: "30% OFF! LIMITED TIME OFFER ⏰ ",
+    title: "RESTapi",
+    desc: "MONGODB,STRIPE &J WT ⏰ ",
     bg: "white",
   },
   {
@@ -29,16 +29,19 @@ export const categories = [
     id: 1,
     img: "https://i.pinimg.com/564x/99/02/b1/9902b1882b5d39ea8f57b3098fabe9bb.jpg",
     title: "Clothing",
+    cat: "fashion",
   },
   {
     id: 2,
     img: "https://i.pinimg.com/564x/e0/de/b1/e0deb12cdc1a986e6c777857f2cf0732.jpg",
     title: "Gadgets",
+    cat: "tech",
   },
   {
     id: 3,
     img: "https://i.pinimg.com/564x/33/db/58/33db5812232e153415a46f8cfca762c9.jpg",
     title: "Home Gym",
+    cat: "home gym",
   },
 ];
 
