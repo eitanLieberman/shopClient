@@ -41,7 +41,7 @@ export const categories = [
     id: 3,
     img: "https://i.pinimg.com/564x/33/db/58/33db5812232e153415a46f8cfca762c9.jpg",
     title: "Home Gym",
-    cat: "home gym",
+    cat: "homegym",
   },
 ];
 

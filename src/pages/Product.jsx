@@ -1,14 +1,13 @@
 import { Add, Remove } from "@material-ui/icons";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
-import { publicRequest } from "../requestMethods";
 import { mobile } from "../responsive";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { publicRequest } from "../requestMethods";
 
 const Container = styled.div``;
 
@@ -125,16 +124,14 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await publicRequest.get("/products/find/" + id);
-
         setProduct(res.data);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch {}
     };
     getProduct();
   }, [id]);
@@ -147,6 +144,9 @@ const Product = () => {
     }
   };
 
+  // const handleClick = () => {
+  //   dispatch(addProduct({ ...product, quantity, color, size }));
+  // };
   return (
     <Container>
       <Navbar />
@@ -158,22 +158,17 @@ const Product = () => {
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
-          <Price> {product.price}</Price>
+          <Price>$ {product.price}</Price>
           <FilterContainer>
             <Filter>
-              <FilterTitle>color</FilterTitle>
+              <FilterTitle>Color</FilterTitle>
               {product.color?.map((c) => (
-                <FilterColor color={c} key={c} onClick={setColor(c)} />
+                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
               ))}
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-
-              <FilterSize
-                onChange={(e) => {
-                  setSize(e.target.value);
-                }}
-              >
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) => (
                   <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
