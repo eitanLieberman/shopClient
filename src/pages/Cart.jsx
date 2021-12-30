@@ -4,7 +4,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-
+import { useSelector } from "react-redux";
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -141,6 +141,7 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
   return (
     <Container>
       <Navbar />
@@ -157,63 +158,45 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/564x/b3/af/81/b3af81144a896127f8399419a328ee70.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>name:</b>FitWatch
-                  </ProductName>
-                  <ProductId>
-                    <b>id:</b>9329488234
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>size:</b>Men
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$200</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products?.map((product) => (
+              <Product>
+                <ProductDetail>
+                  <Image src={product.img} />
+                  <Details>
+                    <ProductName>
+                      <b>Item:</b>
+                      {product.title}
+                    </ProductName>
+                    <ProductId>
+                      <b>id:</b>
+                      {product._id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>
+                      <b>size:</b>
+                      {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Add />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Remove />
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    {product.quantity * product.price}
+                  </ProductPrice>
+                </PriceDetail>
+              </Product>
+            ))}
             <hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/564x/b3/af/81/b3af81144a896127f8399419a328ee70.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>name:</b>FitWatch
-                  </ProductName>
-                  <ProductId>
-                    <b>id:</b>9329488234
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>size:</b>Men
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$200</ProductPrice>
-              </PriceDetail>
-            </Product>
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 400</SummaryItemPrice>
+              <SummaryItemPrice>{cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText> Shipping</SummaryItemText>
@@ -226,7 +209,7 @@ const Cart = () => {
             <hr />
             <SummaryItem type="total">
               <SummaryItemText> Total</SummaryItemText>
-              <SummaryItemPrice>$ 400</SummaryItemPrice>
+              <SummaryItemPrice>{cart.total}</SummaryItemPrice>
             </SummaryItem>
             <Button>CHECKOUT</Button>
           </Summary>
