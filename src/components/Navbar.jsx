@@ -66,15 +66,15 @@ const Right = styled.div`
 const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
-  margin-left: 25px;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  margin-left: 15px;
+  ${mobile({ fontSize: "12px", marginLeft: "5px" })}
 `;
 
 const Button = styled.button`
   font-size: 14px;
   cursor: pointer;
-  margin-left: 25px;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+  margin-left: 0px;
+  ${mobile({ fontSize: "12px", marginLeft: "0px" })}
 `;
 
 const Navbar = () => {

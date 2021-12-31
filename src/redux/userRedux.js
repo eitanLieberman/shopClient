@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
-  name: "cart",
+  name: "user",
   initialState: {
     currentUser: null,
     isFetching: false,
@@ -21,6 +21,8 @@ const userSlice = createSlice({
     },
     logout: (state) => {
       state.currentUser = null;
+      state.isFetching = false;
+      state.error = false;
     },
   },
 });

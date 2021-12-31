@@ -1,6 +1,6 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/apiCalls";
 import { useSelector } from "react-redux";
@@ -72,9 +72,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
-  const handleClick = (e) => {
-    e.preventDefault();
-    login(dispatch, { username, email, password });
+  let loginErr = null;
+  const handleClick = async (e) => {
+    try {
+      e.preventDefault();
+      login(dispatch, { username, email, password });
+    } catch (err) {
+      console.log(err);
+      loginErr = err;
+    }
   };
 
   return (
