@@ -1,10 +1,13 @@
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
 import { mobile } from "../responsive";
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../redux/apiCalls";
+import { logout } from "../redux/userRedux";
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -67,9 +70,23 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const Button = styled.button`
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 25px;
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+`;
+
 const Navbar = () => {
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
   const quantity = useSelector((state) => state.cart.quantity);
-  console.log(quantity);
+  console.log(user);
+  const handleClick = (e) => {
+    e.preventDefault();
+    logoutUser(dispatch);
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -84,8 +101,22 @@ const Navbar = () => {
           <Logo>S.H.O.P</Logo>
         </Center>
         <Right>
-          <MenuItem>Register</MenuItem>
-          <MenuItem>Sign In</MenuItem>
+          <MenuItem>
+            <Link to="/register">Register</Link>
+          </MenuItem>
+          {!user && (
+            <MenuItem>
+              {" "}
+              <Link to="/login">Login</Link>
+            </MenuItem>
+          )}
+          {user && (
+            <MenuItem>
+              {" "}
+              <Button onClick={handleClick}>logout</Button>
+            </MenuItem>
+          )}
+
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={quantity} color="primary">
