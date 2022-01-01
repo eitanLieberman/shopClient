@@ -48,7 +48,7 @@ const Button = styled.button`
 const Success = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log(location.state.stripeData);
+  console.log(location);
   const handleClick = (e) => {
     dispatch(clearCart());
   };

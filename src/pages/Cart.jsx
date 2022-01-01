@@ -161,7 +161,7 @@ const Cart = () => {
       try {
         const res = await userRequest.post("/checkout/payment", {
           tokenId: stripeToken.id,
-          amount: cart.total*100,
+          amount: cart.total * 100,
         });
         history.push("/success", {
           stripeData: res.data,
@@ -183,10 +183,10 @@ const Cart = () => {
         <Title>YOUR CART</Title>
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopTexts>
+          {/* <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist (0)</TopText>
-          </TopTexts>
+          </TopTexts> */}
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
         <Bottom>

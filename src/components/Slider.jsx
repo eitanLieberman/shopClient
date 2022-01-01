@@ -99,7 +99,7 @@ const Slider = () => {
               <Title>{item.title}</Title>
               <Description> {item.desc}</Description>
 
-              <Button> SHOP NOW</Button>
+              {/* <Button> SHOP NOW</Button> */}
             </InfoContainer>
           </Slide>
         ))}

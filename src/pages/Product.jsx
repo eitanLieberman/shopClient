@@ -150,7 +150,7 @@ const Product = () => {
   const handleClick = () => {
     if (size === "") setSize(product.size[0]);
     if (color === "") {
-      return alert("choose a color please");
+      return alert("choose a size and color please");
     }
     dispatch(addProduct({ ...product, quantity, color, size }));
   };

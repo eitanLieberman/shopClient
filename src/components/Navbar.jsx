@@ -5,7 +5,7 @@ import { mobile } from "../responsive";
 import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { logoutUser } from "../redux/apiCalls";
 import { logout } from "../redux/userRedux";
 import { clearCart } from "../redux/cartRedux";
@@ -53,7 +53,9 @@ const Center = styled.div`
 `;
 
 const Logo = styled.h1`
+  font-color: black;
   font-weight: bold;
+  cursor: pointer;
   ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
@@ -99,7 +101,12 @@ const Navbar = () => {
           </SearchContainer> */}
         </Left>
         <Center>
-          <Logo>S.H.O.P</Logo>
+          <Logo>
+            {" "}
+            <NavLink style={{ color: "black", textDecoration: "none" }} to="/">
+              S.H.O.P
+            </NavLink>
+          </Logo>
         </Center>
         <Right>
           {!user && (
@@ -116,7 +123,9 @@ const Navbar = () => {
           {user && (
             <MenuItem>
               {" "}
-              <Link onClick={handleClick}>logout</Link>
+              <Link to="/" onClick={handleClick}>
+                logout
+              </Link>
             </MenuItem>
           )}
 
