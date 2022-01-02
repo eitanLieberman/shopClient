@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login, register } from "../redux/apiCalls";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -15,13 +16,17 @@ const Container = styled.div`
       center;
   background-size: cover;
   display: flex;
+
   align-items: center;
   justify-content: center;
 `;
 
 const Wrapper = styled.div`
-  width: 40%;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
   padding: 20px;
+
   background-color: white;
   ${mobile({ width: "75% " })}
 `;

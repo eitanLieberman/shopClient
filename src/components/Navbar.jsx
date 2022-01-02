@@ -95,6 +95,13 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           <Language>EN</Language>
+          {user && user.isAdmin && (
+            <MenuItem>
+              {" "}
+              <Link to="/AdminPanel">AdminPanel</Link>
+            </MenuItem>
+          )}
+
           {/* <SearchContainer>
             <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 18 }} />
