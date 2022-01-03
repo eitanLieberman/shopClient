@@ -41,3 +41,18 @@ export const addProduct = async (dispatch, product) => {
     console.log(err);
   }
 };
+export const makeOrder = async (dispatch, order) => {
+  console.log(order);
+  const res = await userRequest.post("/orders", order);
+  console.log(res.data);
+};
+
+export const getOrders = async (dispatch) => {
+  try {
+    const res = await userRequest.get("/orders");
+    alert("open your log to see the list");
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+};

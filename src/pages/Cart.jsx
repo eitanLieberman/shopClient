@@ -1,6 +1,7 @@
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
+import { useDispatch } from "react-redux";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
@@ -9,6 +10,8 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useHistory } from "react-router";
+import { makeOrder } from "../redux/apiCalls";
+import { removeProduct } from "../redux/cartRedux";
 
 const KEY = process.env.REACT_APP_STRIPE;
 const Container = styled.div``;
@@ -64,6 +67,7 @@ const Product = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
+  padding:20px
 `;
 
 const ProductDetail = styled.div`
@@ -87,6 +91,7 @@ const ProductName = styled.span``;
 const ProductId = styled.span``;
 
 const ProductColor = styled.div`
+  border: 1px solid black;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -151,8 +156,12 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
+  console.log(user);
+  console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
+  const dispatch = useDispatch();
   const onToken = (token) => {
     console.log(token);
     setStripeToken(token);
@@ -177,6 +186,19 @@ const Cart = () => {
     stripeToken && cart.total >= 1 && makeRequest();
     console.log(cart.total);
   }, [stripeToken, cart.total, history]);
+  const makeOrderClickHandle = async (e) => {
+    e.preventDefault();
+    try {
+      makeOrder(dispatch, {
+        userId: user?.currentUser._id,
+        products: cart?.products?.map((p) => {
+          return { productsID: p._id, quantity: p.quantity };
+        }),
+        amount: cart?.total,
+        address: "test",
+      });
+    } catch (err) {}
+  };
 
   return (
     <Container>
@@ -193,7 +215,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products?.map((product) => (
-              <Product>
+              <Product key={product._id}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
@@ -206,21 +228,37 @@ const Cart = () => {
                       {product._id}
                     </ProductId>
                     <ProductColor color={product.color} />
-                    <ProductSize>
-                      <b>size:</b>
-                      {product.size}
-                    </ProductSize>
+                    {product?.size && (
+                      <ProductSize>
+                        <b>size:</b>
+                        {product.size}
+                      </ProductSize>
+                    )}
+                    <ProductName>
+                      units:{product.quantity} x ${product.price}
+                    </ProductName>
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
-                  <ProductAmountContainer>
-                    <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
-                  </ProductAmountContainer>
+                  <ProductAmountContainer></ProductAmountContainer>
                   <ProductPrice>
-                    {product.quantity * product.price}
+                    ${product.quantity * product.price}
                   </ProductPrice>
+
+                  <TopButton
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      await dispatch(
+                        removeProduct({
+                          id: product._id,
+                          price: product.price,
+                          quantity: product.quantity,
+                        })
+                      );
+                    }}
+                  >
+                    Remove
+                  </TopButton>
                 </PriceDetail>
               </Product>
             ))}
@@ -230,7 +268,7 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>{cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>${cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText> Shipping</SummaryItemText>
@@ -243,7 +281,7 @@ const Cart = () => {
             <hr />
             <SummaryItem type="total">
               <SummaryItemText> Total</SummaryItemText>
-              <SummaryItemPrice>{cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>${cart.total}</SummaryItemPrice>
             </SummaryItem>
             <StripeCheckout
               name="S.H.O.P"
@@ -255,7 +293,9 @@ const Cart = () => {
               token={onToken}
               stripeKey={KEY}
             >
-              <Button type="filled">CHECKOUT NOW</Button>
+              <Button type="filled" onClick={makeOrderClickHandle}>
+                CHECKOUT NOW
+              </Button>
             </StripeCheckout>
           </Summary>
         </Bottom>

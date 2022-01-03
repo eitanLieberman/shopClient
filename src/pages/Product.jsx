@@ -154,6 +154,7 @@ const Product = () => {
     }
     dispatch(addProduct({ ...product, quantity, color, size }));
   };
+
   return (
     <Container>
       <Navbar />
@@ -167,20 +168,24 @@ const Product = () => {
           <Desc>{product.desc}</Desc>
           <Price>$ {product.price}</Price>
           <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              {product.color?.map((c) => (
-                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
-              ))}
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize onChange={(e) => setSize(e.target.value)}>
-                {product.size?.map((s) => (
-                  <FilterSizeOption key={s}>{s}</FilterSizeOption>
+            {product.color?.length > 0 && (
+              <Filter>
+                <FilterTitle>Color</FilterTitle>
+                {product.color?.map((c) => (
+                  <FilterColor color={c} key={c} onClick={() => setColor(c)} />
                 ))}
-              </FilterSize>
-            </Filter>
+              </Filter>
+            )}
+            {product.size?.length > 0 && (
+              <Filter>
+                <FilterTitle>Size</FilterTitle>
+                <FilterSize onChange={(e) => setSize(e.target.value)}>
+                  {product.size?.map((s) => (
+                    <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                  ))}
+                </FilterSize>
+              </Filter>
+            )}
           </FilterContainer>
           <AddContainer>
             <AmountContainer>

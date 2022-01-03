@@ -1,12 +1,13 @@
 import { useLocation } from "react-router";
-import { getUsers, addProduct } from "../redux/apiCalls";
+import { getUsers, addProduct, getOrders } from "../redux/apiCalls";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
+import { useEffect } from "react";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../redux/cartRedux";
 import { useState } from "react";
+import { Category } from "@material-ui/icons";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -46,7 +47,7 @@ const Button = styled.button`
   cursor: pointer;
 display:flex
 
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   flex-direction:column
   &:disabled {
     color: green;
@@ -86,6 +87,9 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const AdminPanel = () => {
+  const abc = [];
+  abc.push(...abc, "abc", "def");
+  console.log(abc);
   const user = useSelector((state) => state.user.currentUser);
   console.log(user);
   const dispatch = useDispatch();
@@ -95,6 +99,9 @@ const AdminPanel = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
+  const [size, setSize] = useState();
+  const [sizes, setSizes] = useState([]);
+  const [color, setColor] = useState([]);
   const handleFilters = (e) => {
     const value = e.target.value;
     console.log(value);
@@ -106,7 +113,11 @@ const AdminPanel = () => {
     await getUsers(dispatch);
     // console.log(category, description, imgUrl, title, price);
   };
-
+  const handleClickGetOrders = async (e) => {
+    e.preventDefault();
+    await getOrders(dispatch);
+    // console.log(category, description, imgUrl, title, price);
+  };
   const handleClickAddProduct = async (e) => {
     e.preventDefault();
     try {
@@ -114,8 +125,10 @@ const AdminPanel = () => {
         title: title,
         img: imgUrl,
         desc: description,
-        categories: [category],
+        categories: category === "" ? "Clothing" : category,
         price: price,
+        size: sizes,
+        color,
       });
       console.log(category, description, imgUrl, title, price);
     } catch (err) {
@@ -131,12 +144,18 @@ const AdminPanel = () => {
           <Select name="action" onChange={handleFilters}>
             <Option>choose action</Option>
             <Option>get all users</Option>
+            <Option>get all orders</Option>
             <Option>add product</Option>
           </Select>
         </Filter>
         {action === "get all users" && (
           <Form>
             <Button onClick={handleClickGet}>GET ALL USERS</Button>
+          </Form>
+        )}
+        {action === "get all orders" && (
+          <Form>
+            <Button onClick={handleClickGetOrders}>GET ALL ORDERS</Button>
           </Form>
         )}
         {action === "add product" && (
@@ -165,16 +184,60 @@ const AdminPanel = () => {
                 setDescription(e.target.value);
               }}
             ></Input>
+            <div>
+              <Input
+                placeholder="size "
+                id="size"
+                onChange={async (e) => {
+                  await setSize(e.target.value);
+                  console.log(size);
+                  console.log(e.target.value);
+                  console.log(document.getElementById("size").value);
+                }}
+              ></Input>
+              <button
+                onClick={async (e) => {
+                  e.preventDefault();
+
+                  await setSizes([
+                    ...sizes,
+                    document.getElementById("size").value,
+                  ]);
+                  alert(
+                    document.getElementById("size").value +
+                      " has been added,you cana add another size"
+                  );
+                }}
+              >
+                size
+              </button>
+            </div>
+            <div>
+              <Input
+                placeholder=" choose Color "
+                type="color"
+                name="color"
+                onChange={(e) => {
+                  console.log(e);
+                  setColor([...color, e.target.value]);
+                  alert(
+                    e.target.value + " added,click again to add another color"
+                  );
+                }}
+              />{" "}
+              <label>color</label>
+            </div>
             <Filter>
               <Select
                 onChange={(e) => {
                   setCategory(e.target.value);
+                  console.log(category);
                 }}
               >
                 <Option disabled>choose category</Option>
-                <Option>Clothing</Option>
-                <Option>Tech</Option>
-                <Option>Home Gym</Option>
+                <Option value="Clothing">Clothing</Option>
+                <Option value="Tech">Tech</Option>
+                <Option value="Home Gym">Home Gym</Option>
               </Select>
             </Filter>
             <Button onClick={handleClickAddProduct}>ADD</Button>
