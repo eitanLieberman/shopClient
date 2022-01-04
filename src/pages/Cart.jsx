@@ -2,6 +2,7 @@ import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import { useDispatch } from "react-redux";
+
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
@@ -9,7 +10,7 @@ import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import { makeOrder } from "../redux/apiCalls";
 import { removeProduct } from "../redux/cartRedux";
 
@@ -160,7 +161,7 @@ const Cart = () => {
   console.log(user);
   console.log(cart);
   const [stripeToken, setStripeToken] = useState(null);
-  const history = useHistory();
+  const history = useNavigate();
   const dispatch = useDispatch();
   const onToken = (token) => {
     console.log(token);
@@ -175,10 +176,11 @@ const Cart = () => {
           tokenId: stripeToken.id,
           amount: cart.total * 100,
         });
-        history.push("/success", {
+        /* history.push("/success", {
           stripeData: res.data,
           products: cart,
-        });
+        }); */
+        history("/success");
       } catch (err) {
         console.log(err);
       }
