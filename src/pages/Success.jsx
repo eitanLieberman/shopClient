@@ -48,7 +48,7 @@ const Button = styled.button`
 const Success = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log(location);
+
   dispatch(clearCart());
   const handleClick = (e) => {
     dispatch(clearCart());

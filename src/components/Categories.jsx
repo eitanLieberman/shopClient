@@ -17,7 +17,7 @@ const Categories = () => {
     const getCategories = async () => {
       try {
         const res = await axios.get("http://localhost:8080/api/categories");
-        console.log(res);
+
         setCategories(res.data);
       } catch (err) {}
     };

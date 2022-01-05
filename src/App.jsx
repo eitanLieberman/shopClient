@@ -17,7 +17,7 @@ import { useSelector } from "react-redux";
 import React, { Fragment } from "react";
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user);
+
   return (
     <Router>
       <Routes>

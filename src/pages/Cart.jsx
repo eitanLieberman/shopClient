@@ -15,6 +15,9 @@ import { makeOrder } from "../redux/apiCalls";
 import { removeProduct } from "../redux/cartRedux";
 
 const KEY = process.env.REACT_APP_STRIPE;
+// const KEY =
+//   "pk_test_51K4QVqBDlCuuqbOby6k2zyqOFScIafsAqNSWx0qsnsEmx0vwOShb2hUluDfgrSowdYI5qBD9uR7QWM1dLwIxhot800WzvirCpA";
+
 const Container = styled.div``;
 
 const Wrapper = styled.div`
@@ -158,16 +161,13 @@ const Button = styled.button`
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user);
-  console.log(user);
-  console.log(cart);
+
   const [stripeToken, setStripeToken] = useState(null);
   const history = useNavigate();
   const dispatch = useDispatch();
   const onToken = (token) => {
-    console.log(token);
     setStripeToken(token);
   };
-  console.log(stripeToken);
 
   useEffect(() => {
     const makeRequest = async () => {
@@ -181,12 +181,9 @@ const Cart = () => {
           products: cart,
         }); */
         history("/success");
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
     stripeToken && cart.total >= 1 && makeRequest();
-    console.log(cart.total);
   }, [stripeToken, cart.total, history]);
   const makeOrderClickHandle = async (e) => {
     e.preventDefault();
@@ -293,7 +290,7 @@ const Cart = () => {
               description={`Your total is $${cart.total}`}
               amount={cart.total * 100}
               token={onToken}
-              stripeKey={KEY}
+              stripeKey={"" + KEY}
             >
               <Button type="filled" onClick={makeOrderClickHandle}>
                 CHECKOUT NOW

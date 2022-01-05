@@ -84,7 +84,7 @@ const Navbar = () => {
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
   const quantity = useSelector((state) => state.cart.quantity);
-  console.log(user);
+
   const handleClick = async (e) => {
     await dispatch(clearCart());
     logoutUser(dispatch);

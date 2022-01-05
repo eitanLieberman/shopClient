@@ -87,11 +87,8 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const AdminPanel = () => {
-  const abc = [];
-  abc.push(...abc, "abc", "def");
-  console.log(abc);
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user);
+
   const dispatch = useDispatch();
   const [action, setAction] = useState("");
   const [title, setTitle] = useState("");
@@ -104,19 +101,16 @@ const AdminPanel = () => {
   const [color, setColor] = useState([]);
   const handleFilters = (e) => {
     const value = e.target.value;
-    console.log(value);
     setAction(value);
   };
 
   const handleClickGet = async (e) => {
     e.preventDefault();
     await getUsers(dispatch);
-    // console.log(category, description, imgUrl, title, price);
   };
   const handleClickGetOrders = async (e) => {
     e.preventDefault();
     await getOrders(dispatch);
-    // console.log(category, description, imgUrl, title, price);
   };
   const handleClickAddProduct = async (e) => {
     e.preventDefault();
@@ -130,10 +124,7 @@ const AdminPanel = () => {
         size: sizes,
         color,
       });
-      console.log(category, description, imgUrl, title, price);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
     alert(title + " has been added, go to shop to check it out");
   };
   return (
@@ -190,9 +181,6 @@ const AdminPanel = () => {
                 id="size"
                 onChange={async (e) => {
                   await setSize(e.target.value);
-                  console.log(size);
-                  console.log(e.target.value);
-                  console.log(document.getElementById("size").value);
                 }}
               ></Input>
               <button
@@ -218,7 +206,6 @@ const AdminPanel = () => {
                 type="color"
                 name="color"
                 onChange={(e) => {
-                  console.log(e);
                   setColor([...color, e.target.value]);
                   alert(
                     e.target.value + " added,click again to add another color"
@@ -231,7 +218,6 @@ const AdminPanel = () => {
               <Select
                 onChange={(e) => {
                   setCategory(e.target.value);
-                  console.log(category);
                 }}
               >
                 <Option disabled>choose category</Option>

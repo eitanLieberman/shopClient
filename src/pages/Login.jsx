@@ -78,7 +78,6 @@ const Login = () => {
       e.preventDefault();
       login(dispatch, { username, email, password });
     } catch (err) {
-      console.log(err);
       loginErr = err;
     }
   };
